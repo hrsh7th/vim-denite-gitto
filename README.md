@@ -2,10 +2,13 @@
 denite.nvim + vim-gitto
 
 # install
-- you can use any plugin manager.
-- this required below plugins.
-  - Shougo/denite.nvim
-  - hrsh7th/vim-gitto
+```
+call dein#add('Shougo/denite.nvim')
+call dein#add('hrsh7th/vim-gitto')
+call dein#add('hrsh7th/vim-denite-gitto')
+```
+
+NOTE: you can use other plugin managers.
 
 # usage
 ## `Denite gitto/status`
