@@ -10,10 +10,9 @@ class Source(Base):
         self.vars = {}
 
     def gather_candidates(self, context):
-        statuses = self.vim.call('gitto#run', 'status#get')
         return [{
-            'word': '{:<4} | {}'.format(status['status'], status['path']),
-            'abbr': '{:<4} | {}'.format(status['status'], status['path']),
+            'word': '{:>3} | {}'.format(status['status'], status['path']),
+            'abbr': '{:>3} | {}'.format(status['status'], status['path']),
             'action__status': status,
             'action__path': status['path']
-        } for status in statuses]
+        } for status in self.vim.call('gitto#run', 'status#get')]
