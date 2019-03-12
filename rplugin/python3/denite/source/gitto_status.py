@@ -17,4 +17,3 @@ class Source(Base):
             'action__status': status,
             'action__path': status['path']
         } for status in statuses]
-
