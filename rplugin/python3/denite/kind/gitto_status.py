@@ -4,6 +4,7 @@ class Kind(File):
     def __init__(self, vim):
         super().__init__(vim)
         self.name = 'gitto/status'
+        self.default_action = 'diff'
         self.redraw_actions = []
         self.redraw_actions += ['reset']
         self.redraw_actions += ['rm']

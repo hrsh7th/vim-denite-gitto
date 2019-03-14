@@ -10,6 +10,23 @@ class Kind(Base):
         self.redraw_actions += ['reset_hard']
         self.persist_actions = self.redraw_actions
 
+    def action_changes(self, context):
+        log = context['targets'][0]['action__log']
+
+        if not len(log['parent_hashes']):
+            self.vim.command('echomsg "{}"'.format('Selected log has\'nt parent.'))
+            return
+
+        context['sources_queue'].append([
+            {'name': 'gitto/changes', 'args': [log['parent_hashes'][0], log['commit_hash']]}
+        ])
+
+    def action_changes_to_head(self, context):
+        log = context['targets'][0]['action__log']
+        context['sources_queue'].append([
+            {'name': 'gitto/changes', 'args': [log['commit_hash'], 'HEAD']}
+        ])
+
     def action_reset(self, context):
         self._reset(context, {})
 
