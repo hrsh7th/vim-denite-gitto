@@ -6,9 +6,8 @@ class Source(Base):
         super().__init__(vim)
 
         self.name = 'gitto'
-        self.kind = 'command'
+        self.kind = 'gitto'
         self.vars = {}
-        self.label_len = 18
 
     def gather_candidates(self, context):
         candidates = []
@@ -22,27 +21,31 @@ class Source(Base):
         return {
             'word': 'push',
             'abbr': 'push',
-            'action__command': 'call gitto#do("branch#push")()'
+            'action__func': 'gitto#run',
+            'action__args': ['branch#push']
         }
 
     def _push_force(self, context):
         return {
             'word': 'push force',
             'abbr': 'push force',
-            'action__command': 'call gitto#do("branch#push")({ "--force": v:true })'
+            'action__func': 'gitto#run',
+            'action__args': ['branch#push', {'--force': True}]
         }
 
     def _status(self, context):
         return {
             'word': 'status',
             'abbr': 'status',
-            'action__command': 'Denite gitto/status'
+            'action__func': 'denite#start',
+            'action__args': [[{'name': 'gitto/status', 'args': []}]]
         }
 
     def _log(self, context):
         return {
             'word': 'log',
             'abbr': 'log',
-            'action__command': 'Denite gitto/log'
+            'action__func': 'denite#start',
+            'action__args': [[{'name': 'gitto/log', 'args': []}]]
         }
 
