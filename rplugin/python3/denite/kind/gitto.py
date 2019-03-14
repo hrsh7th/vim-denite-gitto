@@ -8,4 +8,8 @@ class Kind(Base):
 
     def action_run(self, context):
         target = context['targets'][0]
-        self.vim.call(target['action__func'], *target['action__args'])
+        if target['action__type'] == 'func':
+            self.vim.call(target['action__func'], *target['action__args'])
+        elif target['action__type'] == 'source':
+            context['sources_queue'].append(target['action__source'])
+

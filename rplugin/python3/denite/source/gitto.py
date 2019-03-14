@@ -21,6 +21,7 @@ class Source(Base):
         return {
             'word': 'push',
             'abbr': 'push',
+            'action__type': 'func',
             'action__func': 'gitto#run',
             'action__args': ['branch#push']
         }
@@ -29,6 +30,7 @@ class Source(Base):
         return {
             'word': 'push force',
             'abbr': 'push force',
+            'action__type': 'func',
             'action__func': 'gitto#run',
             'action__args': ['branch#push', {'--force': True}]
         }
@@ -37,23 +39,23 @@ class Source(Base):
         return {
             'word': 'status',
             'abbr': 'status',
-            'action__func': 'denite#start',
-            'action__args': [[{'name': 'gitto/status', 'args': []}]]
+            'action__type': 'source',
+            'action__source': [{'name': 'gitto/status', 'args': []}]
         }
 
     def _branch(self, context):
         return {
             'word': 'branch',
             'abbr': 'branch',
-            'action__func': 'denite#start',
-            'action__args': [[{'name': 'gitto/branch', 'args': []}]]
+            'action__type': 'source',
+            'action__source': [{'name': 'gitto/branch', 'args': []}]
         }
 
     def _log(self, context):
         return {
             'word': 'log',
             'abbr': 'log',
-            'action__func': 'denite#start',
-            'action__args': [[{'name': 'gitto/log', 'args': []}]]
+            'action__type': 'source',
+            'action__source': [{'name': 'gitto/log', 'args': []}]
         }
 
