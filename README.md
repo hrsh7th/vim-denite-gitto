@@ -74,4 +74,4 @@ listing current git repo's branches.
   - fetch?
   - pull
 - error handling if command failed via current working tree's changes.
-
+- more helpful messages
