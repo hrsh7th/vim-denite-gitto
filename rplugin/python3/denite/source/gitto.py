@@ -41,6 +41,14 @@ class Source(Base):
             'action__args': [[{'name': 'gitto/status', 'args': []}]]
         }
 
+    def _branch(self, context):
+        return {
+            'word': 'branch',
+            'abbr': 'branch',
+            'action__func': 'denite#start',
+            'action__args': [[{'name': 'gitto/branch', 'args': []}]]
+        }
+
     def _log(self, context):
         return {
             'word': 'log',
