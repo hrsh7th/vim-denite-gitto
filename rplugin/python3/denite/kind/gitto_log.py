@@ -4,6 +4,7 @@ class Kind(Base):
     def __init__(self, vim):
         super().__init__(vim)
         self.name = 'gitto/log'
+        self.default_action = 'changes'
         self.redraw_actions = []
         self.redraw_actions += ['reset']
         self.redraw_actions += ['reset_soft']

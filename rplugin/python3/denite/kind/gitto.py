@@ -1,4 +1,3 @@
-import functools
 from denite.kind.base import Base
 
 class Kind(Base):

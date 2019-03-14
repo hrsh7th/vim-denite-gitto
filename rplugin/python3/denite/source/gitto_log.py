@@ -15,7 +15,7 @@ class Source(Base):
 
     def gather_candidates(self, context):
         logs = self.vim.call('gitto#run', 'log#get', self.vars['default_option'], context['args'][0] if len(context['args']) > 0 else '')
-        if len(logs) <= 0:
+        if not len(logs):
             return []
 
         author_name_len = max([len(x['author_name']) for x in logs])
