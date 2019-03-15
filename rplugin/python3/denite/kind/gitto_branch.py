@@ -9,6 +9,7 @@ class Kind(Base):
         self.redraw_actions += ['checkout']
         self.redraw_actions += ['rename']
         self.redraw_actions += ['push']
+        self.redraw_actions += ['pull']
         self.redraw_actions += ['merge']
         self.redraw_actions += ['merge_no_ff']
         self.redraw_actions += ['rebase']
@@ -42,3 +43,6 @@ class Kind(Base):
 
     def action_push(self, context):
         self.vim.call('gitto#run', 'branch#push')
+
+    def action_pull(self, context):
+        self.vim.call('gitto#run', 'branch#pull')

@@ -7,14 +7,13 @@ class Source(Base):
 
         self.name = 'gitto/log'
         self.kind = 'gitto/log'
-        self.vars = {
-                'default_option': {
-                        '--no-merges': True
-                    }
-                }
+        self.vars = {}
+        self.vars['option'] = {
+            '--no-merges': True
+        }
 
     def gather_candidates(self, context):
-        logs = self.vim.call('gitto#run', 'log#get', self.vars['default_option'], context['args'][0] if len(context['args']) > 0 else '')
+        logs = self.vim.call('gitto#run', 'log#get', self.vars['option'], context['args'][0] if len(context['args']) > 0 else '')
         if not len(logs):
             return []
 

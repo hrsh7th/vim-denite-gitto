@@ -22,4 +22,3 @@ class Source(Base):
             'action__path': status['path']
         } for status in changes['statuses']]
 
-
