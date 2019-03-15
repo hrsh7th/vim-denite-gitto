@@ -42,16 +42,18 @@ class Source(Base):
         candidates.append({
             'word': 'pull',
             'abbr': 'pull',
-            'action__type': 'source',
-            'action__source': [{'name': 'gitto/status', 'args': []}]
+            'action__type': 'func',
+            'action__func': 'gitto#run',
+            'action__args': ['branch#pull']
         })
 
     def _pull_rebase(self, context, candidates):
         candidates.append({
             'word': 'pull --rebase',
             'abbr': 'pull --rebase',
-            'action__type': 'source',
-            'action__source': [{'name': 'gitto/status', 'args': []}]
+            'action__type': 'func',
+            'action__func': 'gitto#run',
+            'action__args': ['branch#pull', {'--rebase': True}]
         })
 
     def _status(self, context, candidates):
