@@ -26,7 +26,7 @@ class Source(Base):
             'abbr': 'push',
             'action__type': 'func',
             'action__func': 'gitto#run',
-            'action__args': ['branch#push']
+            'action__args': ['repo#push']
         })
 
     def _push_force(self, context, candidates):
@@ -35,7 +35,7 @@ class Source(Base):
             'abbr': 'push --force',
             'action__type': 'func',
             'action__func': 'gitto#run',
-            'action__args': ['branch#push', {'--force': True}]
+            'action__args': ['repo#push', {'--force': True}]
         })
 
     def _pull(self, context, candidates):
@@ -44,7 +44,7 @@ class Source(Base):
             'abbr': 'pull',
             'action__type': 'func',
             'action__func': 'gitto#run',
-            'action__args': ['branch#pull']
+            'action__args': ['repo#pull']
         })
 
     def _pull_rebase(self, context, candidates):
@@ -53,7 +53,7 @@ class Source(Base):
             'abbr': 'pull --rebase',
             'action__type': 'func',
             'action__func': 'gitto#run',
-            'action__args': ['branch#pull', {'--rebase': True}]
+            'action__args': ['repo#pull', {'--rebase': True}]
         })
 
     def _status(self, context, candidates):
