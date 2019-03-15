@@ -12,6 +12,6 @@ class Kind(Base):
         to_hash = context['targets'][0]['action__changes']['to']
         for path in paths:
             self.vim.call('gitto#view#diff_hash_with_hash',
-                          {'hash': from_hash, 'path': path},
-                          {'hash': to_hash, 'path': path})
+                          {'hash': to_hash, 'path': path},
+                          {'hash': from_hash, 'path': path})
 
