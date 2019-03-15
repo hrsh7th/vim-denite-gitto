@@ -83,6 +83,6 @@ listing current git repo's branches.
 - create `Denite gitto/stash`
 - supports below actions
   - fetch?
-  - pull
 - error handling if command failed via current working tree's changes.
 - more helpful messages
+- handling branches by instance instead of branch-name.
