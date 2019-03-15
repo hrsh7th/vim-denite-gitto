@@ -10,6 +10,17 @@ call dein#add('hrsh7th/vim-denite-gitto')
 
 NOTE: you can use other plugin managers.
 
+# Setting
+```
+let g:gitto#config = {}
+function! g:gitto#config.get_buffer_path()
+  if exists('b:denite_context')
+    return fnamemodify(bufname(winbufnr(b:denite_context.prev_winid)), ':p')
+  endif
+  return expand('%:p') " or getcwd() if you use vim-tabpagecd
+endfunction
+```
+
 # API
 ## `Denite gitto`
 listing below actions
