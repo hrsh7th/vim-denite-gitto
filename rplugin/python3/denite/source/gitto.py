@@ -66,10 +66,10 @@ class Source(Base):
 
     def _branch(self, context, candidates):
         candidates.append({
-            'word': 'branch',
-            'abbr': 'branch',
+            'word': 'branch -a',
+            'abbr': 'branch -a',
             'action__type': 'source',
-            'action__source': [{'name': 'gitto/branch', 'args': []}]
+            'action__source': [{'name': 'gitto/branch', 'args': ['-a']}]
         })
 
     def _log(self, context, candidates):

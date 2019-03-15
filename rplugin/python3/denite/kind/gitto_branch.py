@@ -42,7 +42,9 @@ class Kind(Base):
         self.vim.call('gitto#run', 'branch#rebase', branch['name'])
 
     def action_push(self, context):
-        self.vim.call('gitto#run', 'branch#push')
+        branch = context['targets'][0]['action__branch']
+        self.vim.call('gitto#run', 'branch#push', branch)
 
     def action_pull(self, context):
-        self.vim.call('gitto#run', 'branch#pull')
+        branch = context['targets'][0]['action__branch']
+        self.vim.call('gitto#run', 'branch#pull', branch)
