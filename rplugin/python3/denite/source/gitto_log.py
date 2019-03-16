@@ -17,16 +17,31 @@ class Source(Base):
         if not len(logs):
             return []
 
-        author_name_len = max([len(x['author_name']) for x in logs])
+        lengths = self._column_len(logs, [
+            'author_date',
+            'author_name',
+            'subject'
+        ])
+
         return [{
-            'word': '{:>20} | {:<{width}} | {}'.format(log['author_date'],
-                                                       log['author_name'],
-                                                       log['subject'],
-                                                       width=author_name_len),
-            'abbr': '{:>20} | {:<{width}} | {}'.format(log['author_date'],
-                                                       log['author_name'],
-                                                       log['subject'],
-                                                       width=author_name_len),
+            'word': '{:{author_date}} | {:{author_name}} | {:{subject}}'.format(
+                log['author_date'], log['author_name'], log['subject'],
+                author_date=lengths['author_date'],
+                author_name=lengths['author_name'],
+                subject=lengths['subject']
+            ),
+            'abbr': '{:{author_date}} | {:{author_name}} | {:{subject}}'.format(
+                log['author_date'], log['author_name'], log['subject'],
+                author_date=lengths['author_date'],
+                author_name=lengths['author_name'],
+                subject=lengths['subject']
+            ),
             'action__log': log,
         } for log in logs]
+
+    def _column_len(self, candidates, columns):
+        lengths = {}
+        for key in columns:
+            lengths[key] = max([1] + [len(x[key]) for x in candidates])
+        return lengths
 

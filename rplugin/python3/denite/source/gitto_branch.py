@@ -11,10 +11,35 @@ class Source(Base):
 
     def gather_candidates(self, context):
         branches = self.vim.call('gitto#run', 'branch#get', self._option(context))
+
+        lengths = self._column_len(branches, [
+            'name',
+            'remote',
+            'upstream'
+        ])
+
         return [{
-            'word': branch['raw'],
-            'abbr': branch['raw'],
-            'action__branch': branch,
+            'word': '{:1} | {:{name}} | {:{remote}} | {:{upstream}} | {}'.format(
+                branch['HEAD'],
+                branch['name'],
+                branch['remote'],
+                branch['upstream'],
+                branch['upstream_track'],
+                name=lengths['name'],
+                remote=lengths['remote'],
+                upstream=lengths['upstream']
+            ),
+            'abbr': '{:1} | {:{name}} | {:{remote}} | {:{upstream}} | {}'.format(
+                branch['HEAD'],
+                branch['name'],
+                branch['remote'],
+                'has upstream' if len(branch['upstream']) else 'no upstream',
+                branch['upstream_track'],
+                name=lengths['name'],
+                remote=lengths['remote'],
+                upstream=lengths['upstream']
+            ),
+            'action__branch': branch
         } for branch in branches]
 
     def _option(self, context):
@@ -26,4 +51,10 @@ class Source(Base):
             elif len(parts) == 2:
                 option[parts[0]] = parts[1]
         return option
+
+    def _column_len(self, candidates, columns):
+        lengths = {}
+        for key in columns:
+            lengths[key] = max([1] + [len(x[key]) for x in candidates])
+        return lengths
 
