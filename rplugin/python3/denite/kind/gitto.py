@@ -10,6 +10,7 @@ class Kind(Base):
         target = context['targets'][0]
         if target['action__type'] == 'func':
             self.vim.call(target['action__func'], *target['action__args'])
+            context['sources_queue'].append([{'name': 'gitto', 'args': []}])
         elif target['action__type'] == 'source':
             context['sources_queue'].append(target['action__source'])
 
