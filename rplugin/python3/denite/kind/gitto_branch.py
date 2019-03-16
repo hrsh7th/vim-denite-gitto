@@ -7,6 +7,7 @@ class Kind(Base):
         self.default_action = 'checkout'
         self.redraw_actions = []
         self.redraw_actions += ['checkout']
+        self.redraw_actions += ['delete']
         self.redraw_actions += ['rename']
         self.redraw_actions += ['push']
         self.redraw_actions += ['pull']
@@ -19,6 +20,12 @@ class Kind(Base):
     def action_checkout(self, context):
         branch = context['targets'][0]['action__branch']
         self.vim.call('gitto#run', 'branch#checkout', branch['name'])
+
+    def action_delete(self, context):
+        choise = self.vim.call('input', 'delete?(yes/no): ')
+        if choise in ['y', 'ye', 'yes']:
+            branch = context['targets'][0]['action__branch']
+            self.vim.call('gitto#run', 'branch#delete', branch['name'])
 
     def action_rename(self, context):
         branch = context['targets'][0]['action__branch']

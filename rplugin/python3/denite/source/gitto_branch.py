@@ -13,29 +13,29 @@ class Source(Base):
         branches = self.vim.call('gitto#run', 'branch#get', self._option(context))
 
         lengths = self._column_len(branches, [
-            'name',
+            'refname',
             'remote',
             'upstream'
         ])
 
         return [{
-            'word': '{:1} | {:{name}} | {:{remote}} | {:{upstream}} | {}'.format(
+            'word': '{:1} | {:{refname}} | {:{remote}} | {:{upstream}} | {}'.format(
                 branch['HEAD'],
-                branch['name'],
+                branch['refname'],
                 branch['remote'],
                 branch['upstream'],
                 branch['upstream_track'],
-                name=lengths['name'],
+                refname=lengths['refname'],
                 remote=lengths['remote'],
                 upstream=lengths['upstream']
             ),
-            'abbr': '{:1} | {:{name}} | {:{remote}} | {:{upstream}} | {}'.format(
+            'abbr': '{:1} | {:{refname}} | {:{remote}} | {:{upstream}} | {}'.format(
                 branch['HEAD'],
-                branch['name'],
+                branch['refname'],
                 branch['remote'],
-                'has upstream' if len(branch['upstream']) else 'no upstream',
+                branch['upstream'],
                 branch['upstream_track'],
-                name=lengths['name'],
+                refname=lengths['refname'],
                 remote=lengths['remote'],
                 upstream=lengths['upstream']
             ),

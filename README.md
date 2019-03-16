@@ -80,6 +80,7 @@ listing current git repo's branches.
 - rebase
 
 # todo
+- fix branches feature bug
 - create `Denite gitto/stash`
 - supports below actions
   - fetch?
