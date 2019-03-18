@@ -25,7 +25,7 @@ class Kind(Base):
         choise = self.vim.call('input', 'delete?(yes/no): ')
         if choise in ['y', 'ye', 'yes']:
             branch = context['targets'][0]['action__branch']
-            self.vim.call('gitto#run', 'branch#delete', branch['name'])
+            self.vim.call('gitto#run', 'branch#delete', branch)
 
     def action_rename(self, context):
         branch = context['targets'][0]['action__branch']
@@ -38,15 +38,15 @@ class Kind(Base):
 
     def action_merge(self, context):
         branch = context['targets'][0]['action__branch']
-        self.vim.call('gitto#run', 'branch#merge', branch['name'])
+        self.vim.call('gitto#run', 'branch#merge', branch)
 
     def action_merge_no_ff(self, context):
         branch = context['targets'][0]['action__branch']
-        self.vim.call('gitto#run', 'branch#merge', branch['name'], {'--no-ff': True})
+        self.vim.call('gitto#run', 'branch#merge', branch, {'--no-ff': True})
 
     def action_rebase(self, context):
         branch = context['targets'][0]['action__branch']
-        self.vim.call('gitto#run', 'branch#rebase', branch['name'])
+        self.vim.call('gitto#run', 'branch#rebase', branch)
 
     def action_push(self, context):
         branch = context['targets'][0]['action__branch']
