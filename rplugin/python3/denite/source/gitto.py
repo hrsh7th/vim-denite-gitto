@@ -33,33 +33,45 @@ class Source(Base):
 
     def _push(self, context, candidates, branches):
         current = self.current_branch(branches)
-        if current and (current['ahead'] > 0 or len(current['upstream']) <= 0):
-            candidates.append({
-                'word': ['push', 'target is `{}/{}`, {} commits: {}'.format(
-                    current['remote'],
-                    current['name'],
-                    current['ahead'],
-                    current['subject']
-                )],
-                'action__type': 'func',
-                'action__func': 'gitto#run',
-                'action__args': ['repo#push']
-            })
+        if not current:
+            return
+
+        same_name = self._get_same_name_other_branch(current, branches)
+        if (same_name and len(current['upstream']) <= 0) or current['ahead'] <= 0:
+            return
+
+        candidates.append({
+            'word': ['push', 'target is `{}/{}`, {} commits: {}'.format(
+                current['remote'],
+                current['name'],
+                current['ahead'],
+                current['subject']
+            )],
+            'action__type': 'func',
+            'action__func': 'gitto#run',
+            'action__args': ['repo#push']
+        })
 
     def _push_force(self, context, candidates, branches):
         current = self.current_branch(branches)
-        if current and (current['ahead'] > 0 or len(current['upstream']) <= 0):
-            candidates.append({
-                'word': ['push force', 'target is `{}/{}`, {} commits: {}'.format(
-                    current['remote'],
-                    current['name'],
-                    current['ahead'],
-                    current['subject']
-                )],
-                'action__type': 'func',
-                'action__func': 'gitto#run',
-                'action__args': ['repo#push', {'--force': True}]
-            })
+        if not current:
+            return
+
+        same_name = self._get_same_name_other_branch(current, branches)
+        if (same_name and len(current['upstream']) <= 0) or current['ahead'] <= 0:
+            return
+
+        candidates.append({
+            'word': ['push force', 'target is `{}/{}`, {} commits: {}'.format(
+                current['remote'],
+                current['name'],
+                current['ahead'],
+                current['subject']
+            )],
+            'action__type': 'func',
+            'action__func': 'gitto#run',
+            'action__args': ['repo#push', {'--force': True}]
+        })
 
     def _pull(self, context, candidates, branches):
         current = self.current_branch(branches)
@@ -83,23 +95,19 @@ class Source(Base):
 
     def _set_upstream_to(self, context, candidates, branches):
         current = self.current_branch(branches)
-        if not current:
+        if not current or len(current['upstream']) > 0:
             return
 
-        if len(current['upstream']) > 0:
-            return
-
-        for branch in branches:
-            if not branch['local'] and current['name'] == branch['name']:
-                candidates.append({
-                    'word': ['set-upstream-to', '`{}`'.format(
-                        branch['refname']
-                    )],
-                    'action__type': 'func',
-                    'action__func': 'gitto#run',
-                    'action__args': ['branch#set_upstream_to', branch]
-                })
-                break
+        same_name = self._get_same_name_other_branch(current, branches)
+        if same_name:
+            candidates.append({
+                'word': ['set-upstream-to', '`{}`'.format(
+                    same_name['refname']
+                )],
+                'action__type': 'func',
+                'action__func': 'gitto#run',
+                'action__args': ['branch#set_upstream_to', same_name]
+            })
 
     def _fetch(self, context, candidates):
         candidates.append({
@@ -129,6 +137,13 @@ class Source(Base):
             'action__type': 'source',
             'action__source': [{'name': 'gitto/log', 'args': []}]
         })
+
+    def _get_same_name_other_branch(self, target, branches):
+        for branch in branches:
+            if target['refname'] != branch['refname'] and target['name'] == branch['name']:
+                return branch
+        return None
+
 
     def current_branch(self, branches):
         return next((branch for branch in branches if branch['current']), None)
