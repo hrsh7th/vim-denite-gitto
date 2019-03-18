@@ -31,7 +31,7 @@ class Source(Base):
     def _push(self, context, candidates, branch):
         if branch and branch['ahead'] > 0:
             candidates.append({
-                'word': ['push', 'target is `{}/{}`, {} commits'.format(branch['remote'], branch['name'], branch['ahead'])],
+                'word': ['push', 'target is `{}/{}`, {} commits()'.format(branch['remote'], branch['name'], branch['ahead'], branch['subject'])],
                 'action__type': 'func',
                 'action__func': 'gitto#run',
                 'action__args': ['repo#push']
@@ -40,7 +40,7 @@ class Source(Base):
     def _push_force(self, context, candidates, branch):
         if branch and branch['ahead'] > 0:
             candidates.append({
-                'word': ['push force', 'target is `{}/{}`, {} commits'.format(branch['remote'], branch['name'], branch['ahead'])],
+                'word': ['push force', 'target is `{}/{}`, {} commits()'.format(branch['remote'], branch['name'], branch['ahead'], branch['subject'])],
                 'action__type': 'func',
                 'action__func': 'gitto#run',
                 'action__args': ['repo#push', {'--force': True}]
@@ -58,7 +58,7 @@ class Source(Base):
     def _pull_rebase(self, context, candidates, branch):
         if branch and branch['behind'] > 0:
             candidates.append({
-                'word': ['pull --rebase', 'target is `{}`'.format(branch['upstream'])],
+                'word': ['pull rebase', 'target is `{}`'.format(branch['upstream'])],
                 'action__type': 'func',
                 'action__func': 'gitto#run',
                 'action__args': ['repo#pull', {'--rebase': True}]

@@ -21,7 +21,7 @@ class Source(Base):
         return [{
             'word': '{:1} | {:{refname}} | {:{remote}} | {:{upstream}} | {}'.format(
                 branch['HEAD'],
-                branch['refname'],
+                branch['name'] if branch['local'] else branch['refname'],
                 branch['remote'],
                 branch['upstream'],
                 branch['upstream_track'],
@@ -31,7 +31,7 @@ class Source(Base):
             ),
             'abbr': '{:1} | {:{refname}} | {:{remote}} | {:{upstream}} | {}'.format(
                 branch['HEAD'],
-                branch['refname'],
+                branch['name'] if branch['local'] else branch['refname'],
                 branch['remote'],
                 branch['upstream'],
                 branch['upstream_track'],
