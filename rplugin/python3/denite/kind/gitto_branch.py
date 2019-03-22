@@ -55,3 +55,8 @@ class Kind(Base):
     def action_pull(self, context):
         branch = context['targets'][0]['action__branch']
         self.vim.call('gitto#run', 'branch#pull', branch)
+
+    def action_fetch(self, context):
+        for target in context['targets']:
+            self.vim.call('gitto#run', 'branch#fetch', target['action__branch'])
+

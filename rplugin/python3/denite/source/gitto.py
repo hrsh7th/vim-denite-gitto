@@ -32,14 +32,10 @@ class Source(Base):
         return candidates
 
     def _push(self, context, candidates, branches):
+        if not self.is_pushable(branches):
+            return
+
         current = self.current_branch(branches)
-        if not current:
-            return
-
-        same_name = self._get_same_name_other_branch(current, branches)
-        if (same_name and len(current['upstream']) <= 0) or current['ahead'] <= 0:
-            return
-
         candidates.append({
             'word': ['push', 'target is `{}/{}`, {} commits: {}'.format(
                 current['remote'],
@@ -53,14 +49,10 @@ class Source(Base):
         })
 
     def _push_force(self, context, candidates, branches):
+        if not self.is_pushable(branches):
+            return
+
         current = self.current_branch(branches)
-        if not current:
-            return
-
-        same_name = self._get_same_name_other_branch(current, branches)
-        if (same_name and len(current['upstream']) <= 0) or current['ahead'] <= 0:
-            return
-
         candidates.append({
             'word': ['push force', 'target is `{}/{}`, {} commits: {}'.format(
                 current['remote'],
@@ -74,24 +66,28 @@ class Source(Base):
         })
 
     def _pull(self, context, candidates, branches):
+        if not self.is_pullable(branches):
+            return
+
         current = self.current_branch(branches)
-        if current and len(current['upstream']) > 0 and current['behind'] > 0:
-            candidates.append({
-                'word': ['pull', 'target is `{}`'.format(current['upstream'])],
-                'action__type': 'func',
-                'action__func': 'gitto#run',
-                'action__args': ['repo#pull']
-            })
+        candidates.append({
+            'word': ['pull', 'target is `{}`'.format(current['upstream'])],
+            'action__type': 'func',
+            'action__func': 'gitto#run',
+            'action__args': ['repo#pull']
+        })
 
     def _pull_rebase(self, context, candidates, branches):
+        if not self.is_pullable(branches):
+            return
+
         current = self.current_branch(branches)
-        if current and len(current['upstream']) > 0 and current['behind'] > 0:
-            candidates.append({
-                'word': ['pull rebase', 'target is `{}`'.format(current['upstream'])],
-                'action__type': 'func',
-                'action__func': 'gitto#run',
-                'action__args': ['repo#pull', {'--rebase': True}]
-            })
+        candidates.append({
+            'word': ['pull rebase', 'target is `{}`'.format(current['upstream'])],
+            'action__type': 'func',
+            'action__func': 'gitto#run',
+            'action__args': ['repo#pull', {'--rebase': True}]
+        })
 
     def _set_upstream_to(self, context, candidates, branches):
         current = self.current_branch(branches)
@@ -111,7 +107,7 @@ class Source(Base):
 
     def _fetch(self, context, candidates):
         candidates.append({
-            'word': ['fetch', ''],
+            'word': ['fetch', 'fetch all and prune'],
             'action__type': 'func',
             'action__func': 'gitto#run',
             'action__args': ['repo#fetch', {'--all': True, '--prune': True}]
@@ -147,4 +143,28 @@ class Source(Base):
 
     def current_branch(self, branches):
         return next((branch for branch in branches if branch['current']), None)
+
+    def is_pullable(self, branches):
+        current = self.current_branch(branches)
+        if not current:
+            return False
+        if len(current['upstream']) <= 0:
+            return False
+        if current['behind'] <= 0:
+            return False
+        return True
+
+
+    def is_pushable(self, branches):
+        current = self.current_branch(branches)
+        same_name = self._get_same_name_other_branch(current, branches)
+        if not current:
+            return False
+        if not same_name:
+            return True
+        if len(current['upstream']) <= 0:
+            return False
+        if current['ahead'] <= 0:
+            return False
+        return True
 
