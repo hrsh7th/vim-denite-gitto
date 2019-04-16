@@ -27,6 +27,7 @@ listing below actions
 
 - push
 - push force
+- set_upstream_to
 - status
 - branch
 - log
@@ -72,6 +73,7 @@ listing current git repo's branches.
 
 ### actions
 - push
+- push_force
 - checkout
 - rename
 - new
@@ -80,10 +82,7 @@ listing current git repo's branches.
 - rebase
 
 # todo
-- fix branches feature bug
 - create `Denite gitto/stash`
-- supports below actions
-  - fetch?
 - error handling if command failed via current working tree's changes.
 - more helpful messages
 - handling branches by instance instead of branch-name.
