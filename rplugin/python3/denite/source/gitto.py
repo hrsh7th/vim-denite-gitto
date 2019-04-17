@@ -16,7 +16,8 @@ class Source(Base):
         candidates = []
         self._status(context, candidates)
         self._branch(context, candidates)
-        self._log(context, candidates)
+        self._log_for_root(context, candidates)
+        self._log_for_file(context, candidates)
         self._fetch(context, candidates)
         self._set_upstream_to(context, candidates, branches)
         self._push(context, candidates, branches)
@@ -127,9 +128,16 @@ class Source(Base):
             'action__source': [{'name': 'gitto/branch', 'args': ['-a']}]
         })
 
-    def _log(self, context, candidates):
+    def _log_for_file(self, context, candidates):
         candidates.append({
-            'word': ['log', ''],
+            'word': ['log for file', ''],
+            'action__type': 'source',
+            'action__source': [{'name': 'gitto/log', 'args': [self.vim.call('expand', '%:p')]}]
+        })
+
+    def _log_for_root(self, context, candidates):
+        candidates.append({
+            'word': ['log for root', ''],
             'action__type': 'source',
             'action__source': [{'name': 'gitto/log', 'args': []}]
         })
