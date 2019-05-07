@@ -10,6 +10,7 @@ class Kind(File):
         self.redraw_actions += ['rm']
         self.redraw_actions += ['add']
         self.redraw_actions += ['checkout']
+        self.redraw_actions += ['diff']
         self.persist_actions = self.redraw_actions
 
     def action_reset(self, context):

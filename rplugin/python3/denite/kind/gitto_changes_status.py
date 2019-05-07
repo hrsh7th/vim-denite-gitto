@@ -5,6 +5,8 @@ class Kind(Base):
         super().__init__(vim)
         self.name = 'gitto/changes_status'
         self.default_action = 'diff'
+        self.redraw_actions = ['diff']
+        self.persist_actions = self.redraw_actions
 
     def action_diff(self, context):
         paths = [candidate['action__path'] for candidate in context['targets']]
