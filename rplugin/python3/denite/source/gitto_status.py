@@ -15,4 +15,5 @@ class Source(Base):
             'abbr': '{:>3} | {}'.format(status['status'], status['path']),
             'action__status': status,
             'action__path': status['path']
-        } for status in self.vim.call('gitto#run', 'status#get')]
+        } for status in self.vim.call('denite_gitto#run', 'status#get')]
+

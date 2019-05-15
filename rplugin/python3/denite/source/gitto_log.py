@@ -13,7 +13,7 @@ class Source(Base):
         }
 
     def gather_candidates(self, context):
-        logs = self.vim.call('gitto#run', 'log#get', self.vars['option'], context['args'][0] if len(context['args']) > 0 else '')
+        logs = self.vim.call('denite_gitto#run', 'log#get', self.vars['option'], context['args'][0] if len(context['args']) > 0 else '')
         if not len(logs):
             return []
 

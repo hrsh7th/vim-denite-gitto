@@ -39,4 +39,5 @@ class Kind(Base):
 
     def _reset(self, context, opts):
         commit_hash = context['targets'][0]['action__log']['commit_hash']
-        self.vim.call('gitto#run', 'log#reset', commit_hash, opts)
+        self.vim.call('denite_gitto#run', 'log#reset', commit_hash, opts)
+

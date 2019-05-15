@@ -11,7 +11,7 @@ class Source(Base):
         self.label_length = 18
 
     def gather_candidates(self, context):
-        branches = self.vim.call('gitto#run', 'branch#get', {'-a': True})
+        branches = self.vim.call('denite_gitto#run', 'branch#get', {'-a': True})
 
         candidates = []
         self._status(context, candidates)
@@ -45,7 +45,7 @@ class Source(Base):
                 current['subject']
             )],
             'action__type': 'func',
-            'action__func': 'gitto#run',
+            'action__func': 'denite_gitto#run',
             'action__args': ['repo#push']
         })
 
@@ -62,7 +62,7 @@ class Source(Base):
                 current['subject']
             )],
             'action__type': 'func',
-            'action__func': 'gitto#run',
+            'action__func': 'denite_gitto#run',
             'action__args': ['repo#push', {'--force': True}]
         })
 
@@ -74,7 +74,7 @@ class Source(Base):
         candidates.append({
             'word': ['pull', 'target is `{}`'.format(current['upstream'])],
             'action__type': 'func',
-            'action__func': 'gitto#run',
+            'action__func': 'denite_gitto#run',
             'action__args': ['repo#pull']
         })
 
@@ -86,7 +86,7 @@ class Source(Base):
         candidates.append({
             'word': ['pull rebase', 'target is `{}`'.format(current['upstream'])],
             'action__type': 'func',
-            'action__func': 'gitto#run',
+            'action__func': 'denite_gitto#run',
             'action__args': ['repo#pull', {'--rebase': True}]
         })
 
@@ -102,7 +102,7 @@ class Source(Base):
                     same_name['refname']
                 )],
                 'action__type': 'func',
-                'action__func': 'gitto#run',
+                'action__func': 'denite_gitto#run',
                 'action__args': ['branch#set_upstream_to', same_name]
             })
 
@@ -110,7 +110,7 @@ class Source(Base):
         candidates.append({
             'word': ['fetch', 'fetch all and prune'],
             'action__type': 'func',
-            'action__func': 'gitto#run',
+            'action__func': 'denite_gitto#run',
             'action__args': ['repo#fetch', {'--all': True, '--prune': True}]
         })
 
@@ -161,7 +161,6 @@ class Source(Base):
         if current['behind'] <= 0:
             return False
         return True
-
 
     def is_pushable(self, branches):
         current = self.current_branch(branches)

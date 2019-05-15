@@ -27,16 +27,14 @@ class Kind(File):
 
     def action_commit(self, context):
         paths = [candidate['action__path'] for candidate in context['targets']]
-        self.vim.call('gitto#view#commit', paths)
+        self.vim.call('denite_gitto#commit', paths)
 
     def action_diff(self, context):
         paths = [candidate['action__path'] for candidate in context['targets']]
         for path in paths:
-            self.vim.call('gitto#view#diff_file_with_hash',
-                          path,
-                          {'hash': 'HEAD', 'path': path})
+            self.vim.call('denite_gitto#diff_file_with_hash', path, {'hash': 'HEAD', 'path': path})
 
     def _per_status(self, action, context):
         paths = [candidate['action__path'] for candidate in context['targets']]
-        self.vim.call('gitto#run', action, paths)
+        self.vim.call('denite_gitto#run', action, paths)
 

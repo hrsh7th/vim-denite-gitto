@@ -21,8 +21,17 @@ function! g:gitto#config.get_buffer_path()
 endfunction
 ```
 
+# Usage
+
+This plugin provided vim's command.
+The command signature is same of denite.
+
+```
+DeniteGitto `source-name`
+```
+
 # API
-## `Denite gitto`
+## `DeniteGitto gitto`
 listing below actions
 
 - push
@@ -32,7 +41,7 @@ listing below actions
 - branch
 - log
 
-## `Denite gitto/status`
+## `DeniteGitto gitto/status`
 
 listing current git repo's statuses.
 
@@ -45,7 +54,7 @@ listing current git repo's statuses.
 - diff (it show vimdiff)
 
 
-## `Denite gitto/log`
+## `DeniteGitto gitto/log`
 
 liting current git repo's logs.
 
@@ -56,7 +65,7 @@ liting current git repo's logs.
 - changes
 - changes_to_head
 
-## `Denite gitto/changes`
+## `DeniteGitto gitto/changes`
 
 ### args
 - 0: from revision
@@ -67,7 +76,7 @@ listing changed files in range.
 ### actions
 - diff
 
-## `Denite gitto/branch`
+## `DeniteGitto gitto/branch`
 
 listing current git repo's branches.
 
@@ -82,7 +91,8 @@ listing current git repo's branches.
 - rebase
 
 # todo
-- create `Denite gitto/stash`
+- create `DeniteGitto gitto/stash`
 - error handling if command failed via current working tree's changes.
 - more helpful messages
 - handling branches by instance instead of branch-name.
+

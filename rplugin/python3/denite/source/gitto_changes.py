@@ -10,7 +10,7 @@ class Source(Base):
         self.vars = {}
 
     def gather_candidates(self, context):
-        changes = self.vim.call('gitto#run', 'changes#get', context['args'][0], context['args'][1])
+        changes = self.vim.call('denite_gitto#run', 'changes#get', context['args'][0], context['args'][1])
         if not len(changes['statuses']):
             return []
 

@@ -10,7 +10,7 @@ class Source(Base):
         self.vars = {}
 
     def gather_candidates(self, context):
-        branches = self.vim.call('gitto#run', 'branch#get', self._option(context))
+        branches = self.vim.call('denite_gitto#run', 'branch#get', self._option(context))
 
         lengths = self._column_len(branches, [
             'refname',
