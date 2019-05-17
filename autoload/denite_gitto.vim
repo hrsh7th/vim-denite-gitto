@@ -5,10 +5,6 @@ function! denite_gitto#start(args)
   execute printf('Denite %s', a:args)
 endfunction
 
-function! denite_gitto#get_current_working_dir()
-  return s:current_working_dir
-endfunction
-
 function! denite_gitto#run(feature, ...)
   return call(function('gitto#run_in_dir'), [s:current_working_dir, a:feature] + a:000)
 endfunction
