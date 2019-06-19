@@ -8,9 +8,7 @@ class Source(Base):
         self.name = 'gitto/log'
         self.kind = 'gitto/log'
         self.vars = {}
-        self.vars['option'] = {
-            '--no-merges': True
-        }
+        self.vars['option'] = {}
 
     def gather_candidates(self, context):
         logs = self.vim.call('denite_gitto#run', 'log#get', self.vars['option'], context['args'][0] if len(context['args']) > 0 else '')
