@@ -130,14 +130,14 @@ class Source(Base):
 
     def _log_for_file(self, context, candidates):
         candidates.append({
-            'word': ['log for file', ''],
+            'word': ['file log', ''],
             'action__type': 'source',
             'action__source': [{'name': 'gitto/log', 'args': [self.vim.call('expand', '%:p')]}]
         })
 
     def _log_for_root(self, context, candidates):
         candidates.append({
-            'word': ['log for root', ''],
+            'word': ['repo log', ''],
             'action__type': 'source',
             'action__source': [{'name': 'gitto/log', 'args': []}]
         })
