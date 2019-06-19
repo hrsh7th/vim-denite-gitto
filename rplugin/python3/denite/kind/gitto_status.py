@@ -10,20 +10,28 @@ class Kind(File):
         self.redraw_actions += ['rm']
         self.redraw_actions += ['add']
         self.redraw_actions += ['checkout']
+        self.redraw_actions += ['checkout_ours']
+        self.redraw_actions += ['checkout_theirs']
         self.redraw_actions += ['diff']
         self.persist_actions = self.redraw_actions
 
     def action_reset(self, context):
-        self._per_status('status#reset', context)
+        self._per_status('status#reset', {}, context)
 
     def action_rm(self, context):
-        self._per_status('status#rm', context)
+        self._per_status('status#rm', {}, context)
 
     def action_add(self, context):
-        self._per_status('status#add', context)
+        self._per_status('status#add', {}, context)
 
     def action_checkout(self, context):
-        self._per_status('status#checkout', context)
+        self._per_status('status#checkout', {}, context)
+
+    def action_checkout_ours(self, context):
+        self._per_status('status#checkout', {'--ours': True}, context)
+
+    def action_checkout_theirs(self, context):
+        self._per_status('status#checkout', {'--theirs': True}, context)
 
     def action_commit(self, context):
         paths = [candidate['action__path'] for candidate in context['targets']]
@@ -34,7 +42,7 @@ class Kind(File):
         for path in paths:
             self.vim.call('denite_gitto#diff_file_with_hash', path, {'hash': 'HEAD', 'path': path})
 
-    def _per_status(self, action, context):
+    def _per_status(self, action, args, context):
         paths = [candidate['action__path'] for candidate in context['targets']]
         self.vim.call('denite_gitto#run', action, paths)
 

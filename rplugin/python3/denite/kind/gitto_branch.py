@@ -12,6 +12,7 @@ class Kind(Base):
         self.redraw_actions += ['new']
         self.redraw_actions += ['merge']
         self.redraw_actions += ['merge_no_ff']
+        self.redraw_actions += ['merge_squash']
         self.redraw_actions += ['rebase']
         self.redraw_actions += ['push']
         self.redraw_actions += ['pull']
@@ -25,8 +26,8 @@ class Kind(Base):
     def action_delete(self, context):
         choise = self.vim.call('input', 'delete?(yes/no): ')
         if choise in ['y', 'ye', 'yes']:
-            branch = context['targets'][0]['action__branch']
-            self.vim.call('denite_gitto#run', 'branch#delete', branch)
+            for target in context['targets']:
+                self.vim.call('denite_gitto#run', 'branch#delete', target['action__branch'])
 
     def action_rename(self, context):
         branch = context['targets'][0]['action__branch']
@@ -44,6 +45,10 @@ class Kind(Base):
     def action_merge_no_ff(self, context):
         branch = context['targets'][0]['action__branch']
         self.vim.call('denite_gitto#run', 'branch#merge', branch, {'--no-ff': True})
+
+    def action_merge_squash(self, context):
+        branch = context['targets'][0]['action__branch']
+        self.vim.call('denite_gitto#run', 'branch#merge', branch, {'--squash': True})
 
     def action_rebase(self, context):
         branch = context['targets'][0]['action__branch']
