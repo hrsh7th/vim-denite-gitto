@@ -22,15 +22,17 @@ class Source(Base):
         ])
 
         return [{
-            'word': '{:{author_date}} | {:{author_name}} | {:{subject}}'.format(
-                log['author_date'], log['author_name'], log['subject'],
+            'word': '{:{author_date}} | {} | {:{author_name}} | {:{subject}}'.format(
+                log['author_date'], log['commit_hash'][0:7], log['author_name'], log['subject'],
                 author_date=lengths['author_date'],
+                commit_hash=7,
                 author_name=lengths['author_name'],
                 subject=lengths['subject']
             ),
-            'abbr': '{:{author_date}} | {:{author_name}} | {:{subject}}'.format(
-                log['author_date'], log['author_name'], log['subject'],
+            'abbr': '{:{author_date}} | {} | {:{author_name}} | {:{subject}}'.format(
+                log['author_date'], log['commit_hash'][0:7], log['author_name'], log['subject'],
                 author_date=lengths['author_date'],
+                commit_hash=7,
                 author_name=lengths['author_name'],
                 subject=lengths['subject']
             ),
