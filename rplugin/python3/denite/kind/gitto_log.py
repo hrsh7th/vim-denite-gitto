@@ -24,7 +24,7 @@ class Kind(Base):
             {'name': 'gitto/changes', 'args': [log['parent_hashes'][0], log['commit_hash']]}
         ])
 
-    def action_changes_to_head(self, context):
+    def action_changes_head(self, context):
         log = context['targets'][0]['action__log']
         context['sources_queue'].append([
             {'name': 'gitto/changes', 'args': [log['commit_hash'], 'HEAD']}

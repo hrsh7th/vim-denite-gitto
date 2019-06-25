@@ -1,0 +1,125 @@
+*denite-gitto*
+
+The denite.nvim source for git.
+
+==============================================================================
+CONTENTS                                               *denite-gitto-contents*
+
+INTRODUCTION                 |denite-gitto-intro|
+INSTALL                      |denite-gitto-install|
+COMMAND                      |denite-gitto-command|
+USAGE                        |denite-gitto-usage|
+  gitto                      |denite-gitto-usage-gitto|
+  gitto/status               |denite-gitto-usage-gitto_status|
+  gitto/branch               |denite-gitto-usage-gitto_branch|
+  gitto/log                  |denite-gitto-usage-gitto_log|
+  gitto/changes              |denite-gitto-usage-gitto_changes|
+CHANGELOG                    |denite-gitto-changelog|
+
+==============================================================================
+INTRODUCTION                                              *denite-gitto-intro*
+
+denite-gitto provides git operations in denite.nvim's ui.
+The git operations are provided by separated vim plugin that's vim-gitto.
+
+
+==============================================================================
+INSTALL                                                 *denite-gitto-install*
+
+You must install bellow plugins.
+
+- Shougo/denite.nvim
+- hrsh7th/vim-gitto
+- hrsh7th/vim-denite-gitto
+
+can use any plugin managers to install
+
+
+==============================================================================
+COMMAND                                                 *denite-gitto-command*
+>
+  :DeniteGitto ***
+<
+  This interface is same of `Denite` command.
+  You can find the documentation in `Shougo/denite.nvim`.
+
+
+==============================================================================
+USAGE                                                     *denite-gitto-usage*
+
+  You can bellow operations via `DeniteGitto` command.
+
+--------------------------------------------------- *denite-gitto-usage-gitto*
+:DeniteGitto gitto~
+
+  Listing some git operations.
+  You can use all features via this command.
+
+
+-------------------------------------------- *denite-gitto-usage-gitto_status*
+:DeniteGitto gitto/status~
+
+  Listing git status for current buffer's repo.
+  Candidates can take below denite-actions.
+
+  - diff (default)
+  - reset
+  - add
+  - rm
+  - checkout
+  - checkout_ours
+  - checkout_theirs
+  - commit
+
+
+-------------------------------------------- *denite-gitto-usage-gitto_branch*
+:DeniteGitto gitto/branch~
+
+  Listing git branches for current buffer's repo.
+  Candidate can take below denite-actions.
+
+  - checkout (default)
+  - delete
+  - rename
+  - new
+  - merge
+  - merge_no_ff
+  - merge_squash
+  - rebase
+  - push
+  - pull
+  - fetch
+
+
+----------------------------------------------- *denite-gitto-usage-gitto_log*
+:DeniteGitto gitto/log~
+
+  Listing git logs for current buffer's repo.
+  Candidates can take below denite-actions.
+
+  - changes (default)
+  - changes_head
+  - yank_revision
+  - reset
+  - reset_mixed
+  - reset_soft
+  - reset_hard
+
+
+------------------------------------------- *denite-gitto-usage-gitto_changes*
+:DeniteGitto gitto/changes~
+
+  Listing git changeset for selected log.
+  Candidate can take below denite-actions.
+
+  - diff (default)
+
+  Note: merge/merge_no_ff/merge_squash/rebase will effect current branches.
+
+
+==============================================================================
+CHANGELOG                                             *denite-gitto-changelog*
+
+2019/06/25~
+- Add help.
+
