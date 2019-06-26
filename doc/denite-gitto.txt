@@ -5,16 +5,17 @@ The denite.nvim source for git.
 ==============================================================================
 CONTENTS                                               *denite-gitto-contents*
 
-INTRODUCTION                 |denite-gitto-intro|
-INSTALL                      |denite-gitto-install|
-COMMAND                      |denite-gitto-command|
-USAGE                        |denite-gitto-usage|
-  gitto                      |denite-gitto-usage-gitto|
-  gitto/status               |denite-gitto-usage-gitto_status|
-  gitto/branch               |denite-gitto-usage-gitto_branch|
-  gitto/log                  |denite-gitto-usage-gitto_log|
-  gitto/changes              |denite-gitto-usage-gitto_changes|
-CHANGELOG                    |denite-gitto-changelog|
+INTRODUCTION                                              |denite-gitto-intro|
+INSTALL                                                 |denite-gitto-install|
+COMMAND                                                 |denite-gitto-command|
+USAGE                                                     |denite-gitto-usage|
+  gitto                                             |denite-gitto-usage-gitto|
+  gitto/status                               |denite-gitto-usage-gitto_status|
+  gitto/branch                               |denite-gitto-usage-gitto_branch|
+  gitto/log                                     |denite-gitto-usage-gitto_log|
+  gitto/changes                             |denite-gitto-usage-gitto_changes|
+EXAMPLE                                                 |denite-gitto-example|
+CHANGELOG                                             |denite-gitto-changelog|
 
 ==============================================================================
 INTRODUCTION                                              *denite-gitto-intro*
@@ -32,7 +33,7 @@ You must install bellow plugins.
 - hrsh7th/vim-gitto
 - hrsh7th/vim-denite-gitto
 
-can use any plugin managers to install
+Can use any plugin managers to install.
 
 
 ==============================================================================
@@ -60,7 +61,7 @@ USAGE                                                     *denite-gitto-usage*
 :DeniteGitto gitto/status~
 
   Listing git status for current buffer's repo.
-  Candidates can take below denite-actions.
+  Candidates can take bellow denite-actions.
 
   - diff (default)
   - reset
@@ -76,7 +77,7 @@ USAGE                                                     *denite-gitto-usage*
 :DeniteGitto gitto/branch~
 
   Listing git branches for current buffer's repo.
-  Candidate can take below denite-actions.
+  Candidate can take bellow denite-actions.
 
   - checkout (default)
   - delete
@@ -90,12 +91,14 @@ USAGE                                                     *denite-gitto-usage*
   - pull
   - fetch
 
+  Note: merge/merge_no_ff/merge_squash/rebase will effect current branches.
+
 
 ----------------------------------------------- *denite-gitto-usage-gitto_log*
 :DeniteGitto gitto/log~
 
   Listing git logs for current buffer's repo.
-  Candidates can take below denite-actions.
+  Candidates can take bellow denite-actions.
 
   - changes (default)
   - changes_head
@@ -110,15 +113,52 @@ USAGE                                                     *denite-gitto-usage*
 :DeniteGitto gitto/changes~
 
   Listing git changeset for selected log.
-  Candidate can take below denite-actions.
+  Candidate can take bellow denite-actions.
 
   - diff (default)
 
-  Note: merge/merge_no_ff/merge_squash/rebase will effect current branches.
+
+==============================================================================
+EXAMPLE                                                 *denite-gitto-example*
+
+Recommended settings are bellow.
+
+>
+  " mapping.
+  nnoremap git :<C-u>DeniteGitto gitto<CR>
+
+  " denite.
+  autocmd FileType denite call s:denite_setting()
+  function! s:denite_settings() abort
+
+    ... some your settings ...
+
+    nnoremap <silent><buffer><expr>n     denite#do_map('do_action', 'new')
+    nnoremap <silent><buffer><expr>d     denite#do_map('do_action', 'delete')
+	  nnoremap <silent><buffer><expr><C-h> denite#do_map('restore_sources')
+  endfunction
+<
+
+If you type 'n' key in `DeniteGitto gitto/branch` source, will be create new branch.
+If you type 'd' key in `DeniteGItto gitto/branch` source, will be delete selected branches.
+If you type '<C-h>' key, You can go back previous source.
+
+The `restore_sources` will be useful for bellow workflow.
+
+1. Start `DeniteGitto gitto` source.
+2. Select `repo log` candidate.
+3. Get `git log` results.
+4. Select suitable log.
+5. Get `git diff --name-status` results.
+6. Type `<C-h>`.
+7. Go back to previous `git log` results.
 
 
 ==============================================================================
 CHANGELOG                                             *denite-gitto-changelog*
+
+2019/06/25~
+- Fix help.
 
 2019/06/25~
 - Add help.
