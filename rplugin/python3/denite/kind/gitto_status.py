@@ -38,9 +38,14 @@ class Kind(File):
         self.vim.call('denite_gitto#commit', paths)
 
     def action_diff(self, context):
-        paths = [candidate['action__path'] for candidate in context['targets']]
-        for path in paths:
-            self.vim.call('denite_gitto#diff_file_with_hash', path, {'hash': 'HEAD', 'path': path})
+        statuses = [candidate['action__status'] for candidate in context['targets']]
+        for status in statuses:
+            if status['status'] == '??':
+                self.vim.command("tabnew {}".format(status['path']))
+            elif status['status'] == 'R ' or status['status'] == ' R':
+                self.vim.call('denite_gitto#diff_file_with_hash', status['path'], {'hash': 'HEAD', 'path': status['path_before_rename']})
+            else:
+                self.vim.call('denite_gitto#diff_file_with_hash', status['path'], {'hash': 'HEAD', 'path': status['path']})
 
     def _per_status(self, action, args, context):
         paths = [candidate['action__path'] for candidate in context['targets']]

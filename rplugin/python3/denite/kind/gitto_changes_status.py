@@ -9,9 +9,13 @@ class Kind(Base):
         self.persist_actions = self.redraw_actions
 
     def action_diff(self, context):
-        paths = [candidate['action__path'] for candidate in context['targets']]
         from_hash = context['targets'][0]['action__changes']['from']
         to_hash = context['targets'][0]['action__changes']['to']
-        for path in paths:
-            self.vim.call('denite_gitto#diff_hash_with_hash', {'hash': to_hash, 'path': path}, {'hash': from_hash, 'path': path})
+
+        statuses = [candidate['action__status'] for candidate in context['targets']]
+        for status in statuses:
+            if status['status'] == 'R':
+                self.vim.call('denite_gitto#diff_hash_with_hash', {'hash': to_hash, 'path': status['path']}, {'hash': from_hash, 'path': status['path_before_rename']})
+            else:
+                self.vim.call('denite_gitto#diff_hash_with_hash', {'hash': to_hash, 'path': status['path']}, {'hash': from_hash, 'path': status['path']})
 
