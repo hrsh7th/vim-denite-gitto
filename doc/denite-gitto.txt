@@ -15,6 +15,7 @@ USAGE                                                     |denite-gitto-usage|
   gitto/log                                     |denite-gitto-usage-gitto_log|
   gitto/changes                             |denite-gitto-usage-gitto_changes|
 EXAMPLE                                                 |denite-gitto-example|
+TODO                                                       |denite-gitto-todo|
 CHANGELOG                                             |denite-gitto-changelog|
 
 ==============================================================================
@@ -23,6 +24,36 @@ INTRODUCTION                                              *denite-gitto-intro*
 denite-gitto provides git operations in denite.nvim's ui.
 The git operations are provided by separated vim plugin that's vim-gitto.
 
+Currently supported operations.
+
+- status
+  - diff
+  - commit
+  - add
+  - rm
+  - checkout
+  - reset
+
+- log
+  - changes
+  - changes_head
+  - reset
+  - reset_mixed
+  - reset_soft
+  - reset_hard
+
+- branch
+  - new
+  - delete
+  - rename
+  - checkout
+  - fetch
+  - pull
+  - push
+  - rebase
+  - merge
+  - merge_no_ff
+  - merge_squash
 
 ==============================================================================
 INSTALL                                                 *denite-gitto-install*
@@ -153,6 +184,27 @@ The `restore_sources` will be useful for bellow workflow.
 6. Type `<C-h>`.
 7. Go back to previous `git log` results.
 
+
+==============================================================================
+TODO                                                       *denite-gitto-todo*
+
+Support bellow operations.
+
+- gitto
+  - rebase continue
+  - rebase skip
+  - rebase abort
+
+- stash
+  - store
+  - restore
+
+- branch
+  - checkout(support other remote)
+
+- log
+  - revert
+  - cherry-pick?
 
 ==============================================================================
 CHANGELOG                                             *denite-gitto-changelog*
