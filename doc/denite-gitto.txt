@@ -157,6 +157,9 @@ The `restore_sources` will be useful for bellow workflow.
 ==============================================================================
 CHANGELOG                                             *denite-gitto-changelog*
 
+2019/07/31~
+- Support renamed file commits
+
 2019/06/25~
 - Support `diff` action for status(renamed, untracked, deleted).
 
