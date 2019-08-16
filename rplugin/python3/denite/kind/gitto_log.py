@@ -15,19 +15,21 @@ class Kind(Base):
 
     def action_changes(self, context):
         log = context['targets'][0]['action__log']
+        path = context['targets'][0]['source_context']['__path']
 
         if not len(log['parent_hashes']):
             self.vim.command('echomsg "{}"'.format('Selected log has\'nt parent.'))
             return
 
         context['sources_queue'].append([
-            {'name': 'gitto/changes', 'args': [log['parent_hashes'][0], log['commit_hash']]}
+            {'name': 'gitto/changes', 'args': [log['parent_hashes'][0], log['commit_hash'], path]}
         ])
 
-    def action_changes_head(self, context):
+    def action_changes_local(self, context):
         log = context['targets'][0]['action__log']
+        path = context['targets'][0]['source_context']['__path']
         context['sources_queue'].append([
-            {'name': 'gitto/changes', 'args': [log['commit_hash'], 'HEAD']}
+            {'name': 'gitto/changes', 'args': [log['commit_hash'], 'LOCAL', path]}
         ])
 
     def action_yank_revision(self, context):

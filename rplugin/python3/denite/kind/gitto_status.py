@@ -35,7 +35,6 @@ class Kind(File):
 
     def action_commit(self, context):
         paths = []
-        statuses = [candidate['action__status'] for candidate in context['targets']]
         for target in context['targets']:
             if target['action__status']['status'] == 'R ' or target['action__status']['status'] == ' R':
                 paths.append(target['action__status']['path'])

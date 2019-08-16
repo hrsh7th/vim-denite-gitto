@@ -20,5 +20,5 @@ class Source(Base):
             'action__changes': changes,
             'action__status': status,
             'action__path': status['path']
-        } for status in changes['statuses']]
+        } for status in changes['statuses'] if context['args'][2] == '' or context['args'][2] == status['path']]
 

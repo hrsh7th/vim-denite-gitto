@@ -7,11 +7,15 @@ class Source(Base):
 
         self.name = 'gitto/log'
         self.kind = 'gitto/log'
+        self.is_public_context = True
         self.vars = {}
         self.vars['option'] = {}
 
+    def on_init(self, context):
+        context['__path'] = context['args'][0] if len(context['args']) > 0 else ''
+
     def gather_candidates(self, context):
-        logs = self.vim.call('denite_gitto#run', 'log#get', self.vars['option'], context['args'][0] if len(context['args']) > 0 else '')
+        logs = self.vim.call('denite_gitto#run', 'log#get', self.vars['option'], context['__path'])
         if not len(logs):
             return []
 

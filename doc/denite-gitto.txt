@@ -36,7 +36,7 @@ Currently supported operations.
 
 - log
   - changes
-  - changes_head
+  - changes_local
   - reset
   - reset_mixed
   - reset_soft
@@ -132,7 +132,7 @@ USAGE                                                     *denite-gitto-usage*
   Candidates can take bellow denite-actions.
 
   - changes (default)
-  - changes_head
+  - changes_local
   - yank_revision
   - reset
   - reset_mixed

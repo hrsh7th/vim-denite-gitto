@@ -15,7 +15,12 @@ class Kind(Base):
         statuses = [candidate['action__status'] for candidate in context['targets']]
         for status in statuses:
             if status['status'] == 'R':
-                self.vim.call('denite_gitto#diff_hash_with_hash', {'hash': to_hash, 'path': status['path']}, {'hash': from_hash, 'path': status['path_before_rename']})
+                from_path = status['path_before_rename']
             else:
-                self.vim.call('denite_gitto#diff_hash_with_hash', {'hash': to_hash, 'path': status['path']}, {'hash': from_hash, 'path': status['path']})
+                from_path = status['path']
+
+            if to_hash == 'LOCAL':
+                self.vim.call('denite_gitto#diff_file_with_hash', status['path'], {'hash': from_hash, 'path': from_path})
+            else:
+                self.vim.call('denite_gitto#diff_hash_with_hash', {'hash': to_hash, 'path': status['path']}, {'hash': from_hash, 'path': from_path})
 
