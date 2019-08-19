@@ -21,7 +21,7 @@ class Kind(Base):
 
     def action_checkout(self, context):
         branch = context['targets'][0]['action__branch']
-        self.vim.call('denite_gitto#run', 'branch#checkout', branch['name'])
+        self.vim.call('denite_gitto#run', 'branch#checkout', branch)
 
     def action_delete(self, context):
         choise = self.vim.call('input', 'delete?(yes/no): ')
