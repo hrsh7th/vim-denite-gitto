@@ -34,6 +34,20 @@ class Kind(Base):
         new_name = self.vim.call('input', 'rename branch {} -> '.format(branch['name']))
         self.vim.call('denite_gitto#run', 'branch#rename', branch['name'], new_name)
 
+    def action_changes_to(self, context):
+        branch = context['targets'][0]['action__branch']
+        current = self.vim.call('denite_gitto#run', 'branch#current')
+        context['sources_queue'].append([
+            {'name': 'gitto/changes', 'args': [current['name'], branch['name'], '']}
+        ])
+
+    def action_changes_from(self, context):
+        branch = context['targets'][0]['action__branch']
+        current = self.vim.call('denite_gitto#run', 'branch#current')
+        context['sources_queue'].append([
+            {'name': 'gitto/changes', 'args': [branch['name'], current['name'], '']}
+        ])
+
     def action_new(self, context):
         name = self.vim.call('input', 'create branch: ')
         self.vim.call('denite_gitto#run', 'branch#new', name)

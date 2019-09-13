@@ -54,6 +54,8 @@ Currently supported operations.
   - merge
   - merge_no_ff
   - merge_squash
+  - changes_to
+  - changes_from
 
 ==============================================================================
 INSTALL                                                 *denite-gitto-install*
@@ -121,8 +123,10 @@ USAGE                                                     *denite-gitto-usage*
   - push
   - pull
   - fetch
+  - changes_to:   `git diff %CURRENT_BRANCH%...%SELECTED_BRANCH%`
+  - changes_from: `git diff %SELECTED_BRANCH%...%CURRENT_BRANCH%`
 
-  Note: merge/merge_no_ff/merge_squash/rebase will effect current branches.
+  Note: merge/merge_no_ff/merge_squash/rebase/changes_to/changes_from will effect current branches.
 
 
 ----------------------------------------------- *denite-gitto-usage-gitto_log*
@@ -199,15 +203,15 @@ Support bellow operations.
   - store
   - restore
 
-- branch
-  - checkout(support other remote)
-
 - log
   - revert
   - cherry-pick?
 
 ==============================================================================
 CHANGELOG                                             *denite-gitto-changelog*
+
+2019/09/13~
+- Add `changes_to` and `changes_from` action to branch kind.
 
 2019/07/31~
 - Support renamed file commits
