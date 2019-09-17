@@ -38,14 +38,14 @@ class Kind(Base):
         branch = context['targets'][0]['action__branch']
         current = self.vim.call('denite_gitto#run', 'branch#current')
         context['sources_queue'].append([
-            {'name': 'gitto/changes', 'args': [current['name'], branch['name'], '']}
+            {'name': 'gitto/changes', 'args': ['LOCAL', branch['name'], '']}
         ])
 
     def action_changes_from(self, context):
         branch = context['targets'][0]['action__branch']
         current = self.vim.call('denite_gitto#run', 'branch#current')
         context['sources_queue'].append([
-            {'name': 'gitto/changes', 'args': [branch['name'], current['name'], '']}
+            {'name': 'gitto/changes', 'args': [branch['name'], 'LOCAL', '']}
         ])
 
     def action_new(self, context):
