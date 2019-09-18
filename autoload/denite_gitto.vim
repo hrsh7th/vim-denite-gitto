@@ -9,8 +9,8 @@ function! denite_gitto#run(feature, ...)
   return call(function('gitto#run_in_dir'), [s:current_working_dir, a:feature] + a:000)
 endfunction
 
-function! denite_gitto#commit(paths)
-  return gitto#view#commit_in_dir(s:current_working_dir, a:paths)
+function! denite_gitto#commit(paths, amend)
+  return gitto#view#commit_in_dir(s:current_working_dir, a:paths, a:amend)
 endfunction
 
 function! denite_gitto#diff_file_with_hash(path, info)

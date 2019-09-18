@@ -34,14 +34,10 @@ class Kind(File):
         self._per_status('status#checkout', {'--theirs': True}, context)
 
     def action_commit(self, context):
-        paths = []
-        for target in context['targets']:
-            if target['action__status']['status'] == 'R ' or target['action__status']['status'] == ' R':
-                paths.append(target['action__status']['path'])
-                paths.append(target['action__status']['path_before_rename'])
-            else:
-                paths.append(target['action__status']['path'])
-        self.vim.call('denite_gitto#commit', paths)
+        self._commit(context, False)
+
+    def action_commit_amend(self, context):
+        self._commit(context, True)
 
     def action_diff(self, context):
         statuses = [candidate['action__status'] for candidate in context['targets']]
@@ -56,4 +52,14 @@ class Kind(File):
     def _per_status(self, action, args, context):
         paths = [candidate['action__path'] for candidate in context['targets']]
         self.vim.call('denite_gitto#run', action, paths)
+
+    def _commit(self, context, amend):
+        paths = []
+        for target in context['targets']:
+            if target['action__status']['status'] == 'R ' or target['action__status']['status'] == ' R':
+                paths.append(target['action__status']['path'])
+                paths.append(target['action__status']['path_before_rename'])
+            else:
+                paths.append(target['action__status']['path'])
+        self.vim.call('denite_gitto#commit', paths, amend)
 
